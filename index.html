@@ -114,6 +114,15 @@
   </div>
   <script src="https://cdn.bootcss.com/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
   <script>
+    function IsPC(){    
+      var userAgentInfo = navigator.userAgent;  
+      var Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod");    
+      var flag = true;    
+      for (var v = 0; v < Agents.length; v++) {    
+          if (userAgentInfo.indexOf(Agents[v]) > 0) { flag = false; break; }    
+      }    
+      return flag;    
+    }  
     var btn = document.getElementById('btn');
     var contentBox = document.getElementById('content-box');
     var screenBox = document.getElementById('screen-box');
@@ -128,9 +137,11 @@
           var dataUrl = canvas.toDataURL('image/jpeg');
           var newImg = document.createElement("img");
           newImg.src = dataUrl;
-          down.setAttribute('download',dataUrl)
-          down.setAttribute('href',dataUrl)
-          down.style.display = 'block';
+          if (IsPC()) {
+            down.setAttribute('download',dataUrl)
+            down.setAttribute('href',dataUrl)
+            down.style.display = 'block';
+          }
           //先清空子元素
           screenBox.innerHTML = '';
           screenBox.appendChild(newImg);
