@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>今天这个仇先记下来</title>
+  <style>
+    * {
+      margin: 0 auto;
+      font-family: "PingFang SC";
+    }
+    .container {
+      margin: 0 auto;
+      width: 250px;
+    }
+    #content-box {
+      margin: 20px auto;
+      width: 250px;
+      background-color: #fff;
+      border: 1px solid #fff;
+    }
+    .row {
+      margin: 5px auto;
+      width: 250px;
+      height: 42px;
+
+    }
+    #btn {
+      border: 0;
+      width: 100px;
+      border-radius: 5px;
+      color: #fff;
+      background-color: #000;
+      cursor: pointer;
+      padding: 10px 30px;
+      text-align: center;
+      box-sizing: border-box;
+      float: left;
+    }
+    .upload {
+      border: 0;
+      width: 100px;
+      border-radius: 5px;
+      color: #fff;
+      background-color: #000;
+      cursor: pointer;
+      padding: 10px 30px;
+      text-align: center;
+      box-sizing: border-box;
+      float: right;
+      cursor: pointer;
+    }
+    .down{
+      border: 0;
+      width: 100px;
+      border-radius: 5px;
+      color: #fff;
+      background-color: #000;
+      cursor: pointer;
+      padding: 10px 30px;
+      text-align: center;
+      box-sizing: border-box;
+      cursor: pointer;
+      margin: 5px auto;
+      display: none;
+    }
+    .clearfloat:after {
+      content: "";
+      width: 100%;
+      height: 0;
+      clear: both;
+      visibility: hidden;
+      display: table-cell;
+    }
+    #imageChange {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 100px;
+      height: 42px;
+      opacity: 0;
+      z-index: 233;
+      cursor: pointer;
+    }
+    #screen-box {
+      margin: 20px auto;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div id="content-box">
+      <!-- <div class="img-box"> -->
+      <img id="image" style="width:100%" src="./jichou.png" alt="记仇">
+      <!-- </div> -->
+      <div contenteditable="true" class="write">
+        <span id="date">2018年5月18日</span> 没人给我点赞，这个仇我先记下来了
+      </div>
+    </div>
+    <div class="row clearfloat">
+      <a id="btn">记仇</a>
+      <a class="upload">上传</a>
+      <input type="file" id="imageChange">
+    </div>
+
+    <div id="screen-box">
+
+    </div>
+    <a class="down" download="">下载</a>
+
+  </div>
+  <script src="https://cdn.bootcss.com/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
+  <script>
+    var btn = document.getElementById('btn');
+    var contentBox = document.getElementById('content-box');
+    var screenBox = document.getElementById('screen-box');
+    var down = document.querySelector('.down');
+    console.log(down);
+    btn.onclick = function (event) {
+      html2canvas(contentBox, {
+        allowTain: true,
+        taintTest: true,
+        onrendered: function (canvas) {
+          canvas.id = "mycanvas";
+          var dataUrl = canvas.toDataURL('image/jpeg');
+          var newImg = document.createElement("img");
+          newImg.src = dataUrl;
+          down.setAttribute('download',dataUrl)
+          down.setAttribute('href',dataUrl)
+          down.style.display = 'block';
+          //先清空子元素
+          screenBox.innerHTML = '';
+          screenBox.appendChild(newImg);
+        }
+      })
+    }
+    //自动生成当前日期
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    var date = document.getElementById('date');
+    date.innerText = `${year}年${month}月${day}日`;
+    //实现自定义上传图片
+    var image = document.getElementById('image');
+    var imageChange = document.getElementById('imageChange');
+    function readUrl(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          image.setAttribute('src', e.target.result)
+        }
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+    imageChange.onchange = function () {
+      readUrl(this);
+    }
+  </script>
+</body>
+
+</html>
