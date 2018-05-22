@@ -138,7 +138,7 @@
           var dataUrl = canvas.toDataURL('image/jpeg');
           var newImg = document.createElement("img");
           newImg.src = dataUrl;
-          if (IsPC()) {
+          if (IsPC()) { // pc 显示下载图片
             down.setAttribute('download',dataUrl)
             down.setAttribute('href',dataUrl)
             down.style.display = 'block';
