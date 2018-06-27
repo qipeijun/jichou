@@ -1,4 +1,4 @@
 
-### [DEMO](https://qipeijun.github.io/jichou/)
+### [记仇DEMO](https://qipeijun.github.io/jichou/)
+### [搜索DEMO](https://qipeijun.github.io/jichou/search.html)
 
-@Hutchins 童鞋的demo，纯备份。
